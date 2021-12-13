@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
+//il nous reste a integrer la procédure d'appels de fichier
+//et de séquence et de mettre tout sous un while pour redemander
+//à l'utilisateur si les fichiers ne sont pas bon.
 
 int main(){
 
@@ -56,7 +59,8 @@ int main(){
   printf("-id- %s \n", sequence_identite);
 }
 else{
-  printf("Les tailles de vos séquences sont différentes, recommencez \n"); //à mettre sous un while pour qu'il redemande la condition si elle n'est pas remplis
+  printf("Les tailles de vos séquences sont différentes, recommencez \n");
+  //à mettre sous un while pour qu'il redemande la condition si elle n'est pas remplis
 }
 
   return 0;
