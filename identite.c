@@ -56,7 +56,7 @@ int main(){
   printf("-id- %s \n", sequence_identite);
 }
 else{
-  printf("Les tailles de vos séquences sont différentes, recommencez \n"); //à mettre sous un while pour qu'il redemande la condition est pas remplis
+  printf("Les tailles de vos séquences sont différentes, recommencez \n"); //à mettre sous un while pour qu'il redemande la condition si elle n'est pas remplis
 }
 
   return 0;
