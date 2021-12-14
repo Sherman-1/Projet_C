@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 //le code fonctionne pour une séquence donnée, il n'y a pas la condition de retour a la
 //ligne au bout de 80 caractères, ni le CHECK pour verifier que c'est bien une séquence ARN
@@ -8,11 +9,28 @@
 int main(){
   char sequence[]="AUGAUUUUCCCUGAGCCAGGG";
   int i=0;
+  int y=0;
+  bool Arn = false;
   int taille_sequence = strlen(sequence); //necessaire pour le Whiles
 
   FILE* op=fopen("sequence_proteique.txt","w");
 
+for (y=0;y<taille_sequence;y++){
+  if (sequence[y]=='T'){
+    Arn = false;
+  }
+  else{
+    Arn = true;
+  }
+}
+
+if(Arn == false){
+  printf("Ce n'est pas une séquence ARN, recommencez");
+}
+else{
+
   do{
+
     if (sequence[i]=='U'){
       if(sequence[i+1]=='U'){
         if(sequence[i+2]=='U'){
@@ -312,6 +330,6 @@ int main(){
     i = i+3;
   }
   while(i<taille_sequence);
-
+}
   fclose(op);
 }
