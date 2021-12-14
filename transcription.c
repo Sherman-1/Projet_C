@@ -7,7 +7,7 @@ int main(){
   // Ici utiliser les procédures d'extraction de séquence
 
   // Exemple de séquence codante
-  char sequence[]="ATGATTTTCCCTGAGCCAGGG";
+  char sequence[]="ATGATTTTCCCTGAGCCAGGGATGCGGATCTAGCAGGCTAGCTAGCTTAGCTAGGCTAGCTGACTAGTCAAGCTGACTTAGCTGACTGATCGGATCGATCGACTGATCAGT";
 
   // Booléens de vérification
   char codant[] = "F";
@@ -25,7 +25,7 @@ int main(){
   }
 
 
-
+  FILE* op= fopen("séquence_transcrite.txt","w");
   //CHECK de la taille de la séquence
   int taille_sequence=strlen(sequence);
 
@@ -38,22 +38,25 @@ int main(){
     taille[0] = 'F';
   }
 
+  int compteur = 0;
   //si les conditions sont remplis on fait la transcription
   if(codant[0]=='T' && taille[0]=='T'){
     for (i=0;i<taille_sequence;i++){
       if (sequence[i]=='T'){
-        sequence[i]='A';
+        fprintf(op,"A");
       }else if (sequence[i]=='A'){
-        sequence[i]='U';
+        fprintf(op,"U");
       }else if (sequence[i]=='G'){
-        sequence[i]='C';
+        fprintf(op,"C");
       }
       else{
-        sequence[i]='G';
+        fprintf(op,"G");
+      }
+    compteur ++;
+      if (compteur == 80){
+        fprintf(op,"\n");
       }
     }
-
-  printf("%s\n", sequence);
   }
   else{
     printf("Redonnez une séquence correcte \n");
