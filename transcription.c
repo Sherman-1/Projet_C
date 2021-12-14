@@ -4,12 +4,17 @@
 
 int main(){
 
-  //il faut implementer les procédures d'extraction de séquence
+  // Ici utiliser les procédures d'extraction de séquence
+  
+  // Exemple de séquence codante 
   char sequence[]="ATGATTTTCCCTGAGCCAGGG";
-  char codant[] = "T";
-  char taille[] = "T";
+  
+  // Booléens de vérification 
+  char codant[] = "F";
+  char taille[] = "F";
+  
   int i=0;
-
+    
   //CHECk du codon start
   if(sequence[0]=='A' && sequence[1]=='T' && sequence[2]=='G'){
     printf("La séquence contient bien un codon START \n");
@@ -17,7 +22,6 @@ int main(){
   }
   else{
     printf("La séquence ne contient pas de codon START \n");
-    codant[0] = 'F';
   }
 
 
