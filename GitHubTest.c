@@ -1,19 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <regex.h>
 
+int main(int argc, char *argv[]) 
+{
+    FILE* fichier = NULL;
+    int caractereActuel = 0, i = 0;
+    char sequence[2000];
 
-int main() {
+ 
+    fichier = fopen("test.txt", "r");
+ 
+    if (fichier != NULL)
+    {
+        // Boucle de lecture des caractères un à un
+        do
+        {
+            caractereActuel = fgetc(fichier); // On lit le caractère
+            printf("%d", caractereActuel); // On l'affiche
+            sequence[i] = caractereActuel;
+            i++;
 
-
-    FILE* fp = fopen("test.txt", "w");
-    if (!fp) {
-        printf("L’ouverture a  ́echou ́e.\n");
-        exit(EXIT_FAILURE); 
-
+        } while (caractereActuel != EOF); // On continue tant que fgetc n'a pas retourné EOF (fin de fichier)
+ 
+        printf("%s",sequence);
+        fclose(fichier);
     }
-
-    fprintf(fp, "Bonjour c'est un test");
-
-    fclose(fp);
-
+ 
+    return 0;
 }

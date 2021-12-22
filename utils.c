@@ -7,6 +7,11 @@ void extract_sequence(const char* path_input, char* sequence,int taille_fasta) {
     char sequence[taille_fasta];
     
     FILE* fichier = fopen(path_input,"r");
+    if (!fichier) {
+        printf("L’ouverture a  ́echou ́e.\n");
+        exit(EXIT_FAILURE); 
+
+    }
 
     while (! feof(fichier)) {
         int currentChar = fgetc(fichier);
@@ -18,12 +23,18 @@ void extract_sequence(const char* path_input, char* sequence,int taille_fasta) {
     
 }
 
-int taille_fasta(const char* path_input) {
+size_t taille_fasta(const char* path_input) {
 
     FILE* fichier;
     fichier = fopen(path_input,"r"); 
     fseek(fichier,0L, SEEK_END);
-    int a = ftell(fichier);
-    rewind(f);
+    size_t a = ftell(fichier); 
+    a += 100;
+    rewind(fichier);
+    size_t += 100;
+    fclose(fichier);
     return(a);
 }
+
+
+void get_path_from_user(char* path_input)
