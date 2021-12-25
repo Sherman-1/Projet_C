@@ -29,6 +29,12 @@ int main(){
   }
   else if(reponse == 3){
     printf("Vous avez sélectionné : Traduction \n");
+
+    printf("quel est le nom du fichier que vous voulez lire \n");
+    scanf("%s", path_input);
+    printf("\n");
+
+    traduction(path_input);
   }
 
   return 0;
