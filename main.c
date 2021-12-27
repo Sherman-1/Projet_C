@@ -55,7 +55,15 @@ int main(){
   }
   else if(reponse == 5){
     printf("Vous avez séletionné : Calcul du score de similarité de polarité entre deux séquences protéiques \n");
-    printf("Malheureusement, ce service est encore indisponible \n");
+    char path_input_1[100];
+    char path_input_2[100];
+    printf("Vous avez besoin de deux fichiers \n");
+    printf("Quel est le nom du premier fichier \n");
+    scanf("%s", path_input_1);
+    printf("Quel est le nom du deuxième fichier \n");
+    scanf("%s", path_input_2);
+
+    simi_pola(path_input_1,path_input_2);
   }
   else if(reponse == 6){
     printf("Vous avez sélectionné : Recherche séquence consensus issue d’un résultat d’alignement multiple \n");
