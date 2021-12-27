@@ -51,7 +51,7 @@ int main(){
   while (compteur != taille_sequence_identite);
 
   // on sort le pourcentage d'indentité des deux séquences + les deux séquences qu'on compare + la séquence identité
-  identite = compteur_identite/taille_sequence_identite;
+  identite = (compteur_identite/taille_sequence_identite)*100;
   printf("%f \n", identite);
   printf("Identité de séquence : %lf/%d, soit %lf pourcent \n\n",compteur_identite,taille_sequence_identite, identite);
   printf("seq1 %s \n\n", sequence1);
