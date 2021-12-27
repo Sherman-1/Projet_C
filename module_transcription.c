@@ -1,13 +1,24 @@
-#include <stdio.h>
-#include <string.h>
+#include "utils.h"
+#include "module_transcription.h"
 
+void transcription(){
 
-int main(){
+  printf("Vous avez sélectionné : Transcription \n");
+  char path_input[100];
 
-  // Ici utiliser les procédures d'extraction de séquence
+  printf("quel est le nom du fichier que vous voulez lire \n");
+  scanf("%s", path_input); //nom du fichier test = test_fasta (fichier cours sans la première ligne)
+  //on ne peut mettre que le nom du fichier et non tout le chemin
+  printf("\n");
 
-  // Exemple de séquence codante
-  char sequence[]="ATGATTTTCCCTGAGCCAGGGATGCGGATCTAGCAGGCTAGCTAGCTTAGCTAGGCTAGCTGACTAGTCAAGCTGACTTAGCTGACTGATCGGATCGATCGACTGATCAGT";
+  int taille_fasta = 0;
+  taille(path_input, &taille_fasta);
+
+  //printf("%d \n", taille_fasta);
+  char sequence[taille_fasta];
+
+  extract_sequence(path_input, sequence, taille_fasta);
+
 
   // Booléens de vérification
   char codant[] = "F";
@@ -21,11 +32,12 @@ int main(){
     codant[0] = 'T';
   }
   else{
-    printf("La séquence ne contient pas de codon START \n");
+    printf("La séquence ne commence pas par un codon START \n");
   }
 
 
   FILE* op= fopen("séquence_transcrite.txt","w");
+
   //CHECK de la taille de la séquence
   int taille_sequence=strlen(sequence);
 
@@ -44,17 +56,24 @@ int main(){
     for (i=0;i<taille_sequence;i++){
       if (sequence[i]=='T'){
         fprintf(op,"A");
-      }else if (sequence[i]=='A'){
+        compteur = compteur +1;
+      }
+      else if (sequence[i]=='A'){
         fprintf(op,"U");
-      }else if (sequence[i]=='G'){
+        compteur = compteur +1;
+      }
+      else if (sequence[i]=='G'){
         fprintf(op,"C");
+        compteur = compteur +1;
       }
-      else{
+      else if (sequence[i]=='C'){
         fprintf(op,"G");
+        compteur = compteur +1;
       }
-    compteur ++;
+
       if (compteur == 80){
         fprintf(op,"\n");
+        compteur = 0;
       }
     }
   }
@@ -62,5 +81,4 @@ int main(){
     printf("Redonnez une séquence correcte \n");
   }
 
-  return 0;
 }
