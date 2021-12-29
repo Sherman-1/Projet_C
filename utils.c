@@ -1,91 +1,91 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#define SIZE_MAX 10000
 
-/* Extract_sequence extraie la séquence FASTA d'un fichier pour la stocker dans une variable char */
+void extract_sequence(const char* path_input, char* sequence) {
 
-
-void extract_sequence(const char* path_input, char* sequence,int taille_fasta) {
-
-    char buffer[taille_fasta];
-    printf("%ld\n",strlen(buffer));
-    FILE* fichier = fopen(path_input,"r");
+    char buffer[SIZE_MAX]; // Variable tampon pour accueillir le fichier brut
     int i = 0;
 
+    FILE* fichier = fopen(path_input,"r");
+    if (! fichier ) {
+      printf ( " L'ouverture a échouée\n Veuillez spécifier un chemin d'accès valide pour le fichier\n" ) ;
+      exit ( EXIT_FAILURE ) ;
+    }
+
+
+    // Tant que le caractère EOF n'est pas atteint, on déplace le curseur fgetc le long du fichier
+    // Le contenu du fichier est versé dans buffer[]
     while (! feof(fichier)) {
-
         int currentChar = fgetc(fichier);
-
         buffer[i] = currentChar;
-        printf("%c\n",buffer[i]); // Print de vérification
-
         i++;
-
-    } // problème de core dump avec cette version du code au dessus
-    // A la fin soit l'execution stoppe à cause d'un pb mémoire
-    // Soit le dernier caractère inséré dans le tampon est non trivial
-    // peut pas être ouvert par un log. traitement texte
+    }
 
     fclose(fichier);
 
+    /*
+    ______________________________________
+
+    Seconde partie du code, ici on nettoie buffer
+    pour transférer son contenu dans la variable appelée
+    par la procédure
+    On retire en premier la ligne header du FASTA
+    ______________________________________
+    */
+
+    // Tant que le premier retour à la ligne n'est pas atteint, on incrémente i depuis 0
+
     i = 0;
-    while (buffer[i]!='\n') {
-        i++;
+    do {
+      i++;
+    } while ( buffer[i] != '\n');
+
+
+    i += 1;       // i prend la valeur de la position du premier caractère
+                  // apparaissant juste après le premier retour chariot
+
+    int k, n = 0; // Variables de comptage
+
+
+    // On parcourt buffer[] à l'aide de k, on ajoute son contenu
+    // dans sequence si celui ci est différent d'un retour à la ligne
+
+
+    for ( k = i ; k < strlen(buffer); k++) {
+
+      if (buffer[k] != '\n') {
+
+        sequence[n] = buffer[k];
+        n++;
+
+      }
     }
 
-    printf("%s\n",buffer);
+    /* Pour une raison inconnue, la lecture de fichier implique
+    que la chaine buffer[] se termine toujours par un caractère
+    spécial, on le supprime donc en le remplaçant par \0 */
 
-
-    int j, k = 0;
-
-    for ( j = i+1; buffer[j]!='\0';j++) {
-
-        if ( buffer[j]!='\n' ) {
-
-            sequence[k] = buffer[j];
-            k++;
-        }
-    }
-
-    //printf("%s\n",sequence);
-
+    sequence[strlen(sequence)-1] = '\0';
 }
 
-void save_sequence(const char* path_output, char* sequence) {
 
-    FILE* openfile = fopen(path_output, "w");
-
-    fprintf(openfile,"%s", sequence);
-
-
-    fclose(openfile);
-
-}
-
+// Fonction obsolète car les consignes autorisent de définir une SIZE_MAX de 10000
 size_t taille_fasta(const char* path_input) {
 
     FILE* fichier;
     fichier = fopen(path_input,"r");
     fseek(fichier,0L, SEEK_END);
-    int a = ftell(fichier);
+    size_t a = ftell(fichier);
     rewind(fichier);
     return(a);
 }
 
 int main() {
 
-
-    char path_fichier[50];
-    printf("Enter file name\n");
-    scanf("%s",path_fichier);
-
-    int taille_seq_fasta =taille_fasta(path_fichier);
-    char sequence[taille_seq_fasta];
-
-
-
-    extract_sequence(path_fichier,sequence,taille_seq_fasta);
-    save_sequence("test2.fasta",sequence);
-
-    return(0);
+  char sequence[SIZE_MAX];
+  extract_sequence("/home/sherman/Bureau/Dossier_Tests/test.fasta",sequence);
+  return 0;
 
 }
