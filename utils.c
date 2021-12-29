@@ -61,7 +61,7 @@ void save_sequence(const char* path_output, char* sequence) {
 
 }
 
-int taille_fasta(const char* path_input) {
+size_t taille_fasta(const char* path_input) {
 
     FILE* fichier;
     fichier = fopen(path_input,"r");
