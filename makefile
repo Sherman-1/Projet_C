@@ -22,6 +22,14 @@ module_simi_pola.o: module_simi_pola.c module_simi_pola.h utils.h
 	$(CC) -c module_simi_pola.c $(CFLAGS)
 
 main.o: main.c utils.h module_identite.h module_transcription.h
+
+projet_C: fonction.o main.o
+	$(CC) main.o fonction.o -o projet_C
+
+fonction.o: fonction.c fonction.h
+	$(CC) -c fonction.c $(CFLAGS)
+
+main.o: main.c fonction.h
 	$(CC) -c main.c $(CFLAGS)
 
 clean:
