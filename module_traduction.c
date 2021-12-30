@@ -4,23 +4,27 @@
 
 void traduction(){
 
+  //l'utilisateur a choisit le module de traduction
   printf("Vous avez sélectionné : Traduction \n");
-  char path_input[100];
 
+  //on demande a l'utilisateur le nom du fichier qu'il veut lire
+  char path_input[100];
   printf("quel est le nom du fichier que vous voulez lire \n");
   scanf("%s", path_input);
   printf("\n");
 
+  //Recherche de la taille de la séquence
   int taille_fasta = 0;
   taille(path_input, &taille_fasta);
 
-  //printf("%d \n", taille_fasta);
+  //on extrait la séquence
   char sequence[taille_fasta];
-
   extract_sequence(path_input, sequence, taille_fasta);
 
   int i=0;
   int y=0;
+
+  //booléen : verification qu'on a bien une séquence ARN
   bool Arn = false;
   //int taille_sequence = strlen(sequence); //necessaire pour le Whiles
 
@@ -37,11 +41,12 @@ for (y=0;y<taille_fasta;y++){
 
 if(Arn == false){
   printf("Ce n'est pas une séquence ARN, recommencez");
+  // si la condition est fausse, on arrete le programme et l'utilisateur doit recommencer
 }
 else{
-
+//si la condition est bonne, on démarre la traduction
     int compteur = 0;
-
+//on met un compteur pour revenir à la ligne tous les 80 caractères
   do{
 
     if (sequence[i]=='U'){
