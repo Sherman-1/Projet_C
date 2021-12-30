@@ -1,10 +1,18 @@
+#include "utils.h"
 #include <stdio.h>
 #include <string.h>
 
 /* Extract_sequence extraie la séquence FASTA d'un fichier pour la stocker dans une variable char */
 
 
-void extract_sequence(const char* path_input, char* sequence,int taille_fasta) {
+void taille(const char* path_input, int* taille_fasta) {
+
+    FILE* openfile= fopen(path_input, "r");
+
+    while(fgetc(openfile) != EOF)
+      (*taille_fasta) ++;
+
+    fclose(openfile);
 
     char buffer[taille_fasta];
     printf("%ld\n",strlen(buffer));
@@ -61,7 +69,22 @@ void save_sequence(const char* path_output, char* sequence) {
 
 }
 
-int taille_fasta(const char* path_input) {
+
+void extract_sequence(const char* path_input, char* sequence,int taille_fasta) {
+
+  int i=0;
+
+  FILE* fichier = fopen(path_input,"r");
+
+  while (! feof(fichier)) {
+      int currentChar = fgetc(fichier);
+      sequence[i] = currentChar;
+      i++;
+  }
+  fclose(fichier);
+  //printf("%s\n",sequence);
+  //on compte les retours à la ligne alors qu'il faudrait pas
+
 
     FILE* fichier;
     fichier = fopen(path_input,"r");
