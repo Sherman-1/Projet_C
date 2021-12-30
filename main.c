@@ -27,7 +27,9 @@ int main(){
   if (reponse == 1){
     printf("Vous avez sélectionné : Rechercher la séquence codante la plus longue \n");
 
-    printf("Malheureusement, ce service est encore indisponible \n");
+    get_path_user(path_input);
+
+    module_ORF(path_input);
   }
   else if (reponse == 2){
 

@@ -1,26 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 #include <stddef.h>
+#include "utils.h"
 #define SIZE_MAX 10000
 
-int main() {
+int ORF_finder(const char* path_input) {
 
     char sequence[SIZE_MAX];
 
     printf("Bienvenue dans le module de recherche de cadre ouvert de lecture.\n
-            Veuillez préciser un chemin d'accès vers un fichier au format fasta.\n
-            Y sera recherché le plus grand cadre ouvert de lecture depuis un codon\n
+            Il y sera recherché le plus grand cadre ouvert de lecture depuis un codon\n
             ATG vers un des trois codons STOP, dans les 6 cadres possibles offerts\n
-            par la séquence fournie.\n\n");
+            par la séquence fournie en entrée \n\n");
 
 
-    // Mettre procédure d'appel de chemin de fichier //
-
-
-
-
-
-    // extract_sequence(path_input,sequence);
+    extract_sequence(path_input,sequence);
 
 
     int i, k;
