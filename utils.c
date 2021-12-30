@@ -1,114 +1,184 @@
-#include "utils.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#define SIZE_MAX 10000
+#define PATH_INPUT_MAX_SIZE 100
 
-/* Extract_sequence extraie la séquence FASTA d'un fichier pour la stocker dans une variable char */
+void extract_sequence(const char* path_input, char* sequence) {
 
-
-void taille(const char* path_input, int* taille_fasta) {
-
-    FILE* openfile= fopen(path_input, "r");
-
-    while(fgetc(openfile) != EOF)
-      (*taille_fasta) ++;
-
-    fclose(openfile);
-
-    char buffer[taille_fasta];
-    printf("%ld\n",strlen(buffer));
-    FILE* fichier = fopen(path_input,"r");
+    char buffer[SIZE_MAX]; // Variable tampon pour accueillir le fichier brut temporairement
     int i = 0;
 
+    FILE* fichier = fopen(path_input,"r");
+    if (! fichier ) {
+      printf ( " L'ouverture a échouée\n Veuillez spécifier un chemin d'accès valide pour le fichier\n" ) ;
+      exit ( EXIT_FAILURE ) ;
+    }
+
+
+    // Tant que le caractère EOF n'est pas atteint, on déplace le curseur fgetc le long du fichier
+    // Le contenu du fichier est versé dans buffer[]
     while (! feof(fichier)) {
-
         int currentChar = fgetc(fichier);
-
         buffer[i] = currentChar;
-        printf("%c\n",buffer[i]); // Print de vérification
-
         i++;
-
-    } // problème de core dump avec cette version du code au dessus
-    // A la fin soit l'execution stoppe à cause d'un pb mémoire
-    // Soit le dernier caractère inséré dans le tampon est non trivial
-    // peut pas être ouvert par un log. traitement texte
+    }
 
     fclose(fichier);
 
-    i = 0;
-    while (buffer[i]!='\n') {
+    /*
+    ______________________________________
+
+    Seconde partie du code, on traite le buffer
+    en fonction de la nature du fichier d'origine.
+    ______________________________________
+
+    */
+
+    // DANS LE CAS OU FORMAT FASTA
+
+    // Si le fichier est au format fasta, on retire la première ligne
+    // On ne traite pas le cas d'un fichier MultiFasta
+
+    if (buffer[0] == '>') {
+
+      // Tant que le premier retour à la ligne n'est pas atteint, on incrémente i depuis 0
+
+      i = 0;
+      do {
         i++;
-    }
-
-    printf("%s\n",buffer);
+      } while ( buffer[i] != '\n');
 
 
-    int j, k = 0;
+      i += 1;       // i prend désormais la valeur de la position du caractère
+                    // apparaissant juste après le premier retour chariot
 
-    for ( j = i+1; buffer[j]!='\0';j++) {
 
-        if ( buffer[j]!='\n' ) {
 
-            sequence[k] = buffer[j];
-            k++;
+      int k, n = 0; // Variables de comptage
+
+
+      // On parcourt buffer[] à l'aide de k, on ajoute son contenu
+      // dans sequence si celui ci est différent d'un retour à la ligne
+
+
+      for ( k = i ; k < strlen(buffer); k++) {
+
+        if (buffer[k] != '\n') {
+
+          sequence[n] = buffer[k];
+          n++;
+
         }
+      }
     }
 
-    //printf("%s\n",sequence);
+    // DANS LE CAS OU NON FORMAT FASTA
+
+    // Si le fichier n'est pas au format fasta ( module 6 )
+    // On transfère buffer[] dans sequence[] sans modification
+
+    else {
+
+      int k;
+      for ( k = 0; k < strlen(buffer); k++) {
+        sequence[k] = buffer[k];
+      }
+    }
+
+    /* Pour une raison inconnue, la lecture de fichier implique
+    que la chaine buffer[] se termine toujours par un caractère
+    spécial, on le supprime donc en le remplaçant par \0 */
+
+    sequence[strlen(sequence)-1] = '\0';
 
 }
 
-void save_sequence(const char* path_output, char* sequence) {
 
-    FILE* openfile = fopen(path_output, "w");
-
-    fprintf(openfile,"%s", sequence);
-
-
-    fclose(openfile);
-
-}
-
-
-void extract_sequence(const char* path_input, char* sequence,int taille_fasta) {
-
-  int i=0;
-
-  FILE* fichier = fopen(path_input,"r");
-
-  while (! feof(fichier)) {
-      int currentChar = fgetc(fichier);
-      sequence[i] = currentChar;
-      i++;
-  }
-  fclose(fichier);
-  //printf("%s\n",sequence);
-  //on compte les retours à la ligne alors qu'il faudrait pas
-
+// Fonction obsolète car les consignes autorisent de définir une SIZE_MAX de 10000
+size_t taille_fasta(const char* path_input) {
 
     FILE* fichier;
     fichier = fopen(path_input,"r");
     fseek(fichier,0L, SEEK_END);
-    int a = ftell(fichier);
+    size_t a = ftell(fichier);
     rewind(fichier);
     return(a);
 }
 
+void save_sequence(const char* path_output, char* sequence) {
+
+    int i;
+    FILE* fichier = fopen(path_output,"w");
+
+
+    // Verification de la bonne ouverture du fichier
+    if (! fichier) {
+
+        printf("L'ouverture du fichier a échoué. \n");
+        exit(EXIT_FAILURE);
+    }
+
+
+    // Bloc de code où on inscrit dans le fichier la séquence entrée dans la
+    // procédure. Retour à la ligne dès que 80 caractères sont ajoutés.
+
+    int k = 0;
+         // k sert de compteur réinitialisable pour le nombre de caractère ajouté.
+    for ( i = 0; i < strlen(sequence); i++) {
+        if (k == 80) {
+
+            fputc('\n',fichier);
+            k = 0;
+        }
+
+        fputc(sequence[i],fichier);
+        k++;
+    }
+}
+
+void get_path_user(char* path_input) {
+
+
+  printf("Entrez ici votre chemin d'accès au fichier FASTA \n");
+  fgets(path_input, PATH_INPUT_MAX_SIZE, stdin);
+
+  FILE* fichier = fopen(path_input,"r");
+  int bool = 0;
+
+  if ( !fichier ) {
+
+  printf("\nLe chemin spécifié ne permet pas l'ouverture du fichier\n");
+  printf("Voulez vous réessayer de spécifier un chemin d'accès ? O/n \n");
+
+  char answer;
+  scanf("%c",&answer);
+
+    while ( !fichier && bool == 0) {
+
+      if ( answer == 'O' || answer == 'o') {
+
+        printf("Entrez ici votre chemin d'accès au fichier FASTA \n");
+        fgets(path_input, PATH_INPUT_MAX_SIZE, stdin);
+        fichier = fopen(path_input,"r");
+
+      }
+
+      else if ( answer == 'N' || answer == 'n' ) {
+
+        printf("Fermeture du programme\n");
+        bool = 1;
+
+      }
+
+    }
+  }
+}
+
 int main() {
 
+  char path_input[PATH_INPUT_MAX_SIZE];
 
-    char path_fichier[50];
-    printf("Enter file name\n");
-    scanf("%s",path_fichier);
-
-    int taille_seq_fasta =taille_fasta(path_fichier);
-    char sequence[taille_seq_fasta];
-
-
-
-    extract_sequence(path_fichier,sequence,taille_seq_fasta);
-    save_sequence("test2.fasta",sequence);
-
-    return(0);
+  get_path_user(path_input);
 
 }
