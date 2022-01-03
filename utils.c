@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#define SIZE_MAX 10000
-#define PATH_INPUT_MAX_SIZE 100
+#include "utils.h"
 
 void extract_sequence(const char* path_input, char* sequence) {
 
@@ -106,6 +102,16 @@ size_t taille_fasta(const char* path_input) {
     return(a);
 }
 
+void taille(const char* path_input, int* taille_fasta) {
+
+    FILE* openfile= fopen(path_input, "r");
+
+    while(fgetc(openfile) != EOF)
+      (*taille_fasta) ++;
+
+    fclose(openfile);
+}
+
 void save_sequence(const char* path_output, char* sequence) {
 
     int i;
@@ -141,10 +147,13 @@ void get_path_user(char* path_input) {
 
 
   printf("Entrez ici votre chemin d'accès au fichier FASTA \n");
-  fgets(path_input, PATH_INPUT_MAX_SIZE, stdin);
+  scanf("%c",path_input);
+
+  fgets(path_input, PATH_INPUT_MAX_SIZE, stdin);//je comprend pas cette ligne.
+
 
   FILE* fichier = fopen(path_input,"r");
-  int bool = 0;
+  bool path = false;
 
   if ( !fichier ) {
 
@@ -154,7 +163,7 @@ void get_path_user(char* path_input) {
   char answer;
   scanf("%c",&answer);
 
-    while ( !fichier && bool == 0) {
+    while ( !fichier && path == false) {
 
       if ( answer == 'O' || answer == 'o') {
 
@@ -167,18 +176,10 @@ void get_path_user(char* path_input) {
       else if ( answer == 'N' || answer == 'n' ) {
 
         printf("Fermeture du programme\n");
-        bool = 1;
+        path = true;
 
       }
 
     }
   }
-}
-
-int main() {
-
-  char path_input[PATH_INPUT_MAX_SIZE];
-
-  get_path_user(path_input);
-
 }
