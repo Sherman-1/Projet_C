@@ -19,7 +19,7 @@ void traduction(){
 
   //on extrait la séquence
   char sequence[taille_fasta];
-  extract_sequence(path_input, sequence, taille_fasta);
+  extract_sequence(path_input, sequence);
 
   int i=0;
   int y=0;

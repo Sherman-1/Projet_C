@@ -32,8 +32,8 @@ void identite(){
   char sequence2[taille_sequence_2];
 
   //on récupère les séquences des fichiers de l'utilisateur
-  extract_sequence(path_input_1, sequence1, taille_sequence_1);
-  extract_sequence(path_input_2, sequence2, taille_sequence_2);
+  extract_sequence(path_input_1, sequence1);
+  extract_sequence(path_input_2, sequence2);
 
   //on initialise un booléen pour verifier que les tailles des deux séquences
   //sont égales

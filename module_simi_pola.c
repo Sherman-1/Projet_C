@@ -27,9 +27,9 @@ void simi_pola(){
   char sequence1[taille_sequence_1];
   char sequence2[taille_sequence_2];
 
-  extract_sequence(path_input_1, sequence1, taille_sequence_1);
+  extract_sequence(path_input_1, sequence1);
   sequence1[taille_sequence_1]='\0';
-  extract_sequence(path_input_2, sequence2, taille_sequence_2);
+  extract_sequence(path_input_2, sequence2);
   sequence2[taille_sequence_2]='\0';
 
   printf("\n");

@@ -7,7 +7,8 @@ void transcription(){
   printf("Vous avez sélectionné : Transcription \n");
 
   //on initialise la chaine de caractère contenant la voie du fichier
-  char path_input[100];
+  char path_input[PATH_INPUT_MAX_SIZE];
+
   printf("quel est le nom du fichier que vous voulez lire \n");
   scanf("%s", path_input); //nom du fichier test = test_fasta (fichier cours sans la première ligne)
   //on ne peut mettre que le nom du fichier et non tout le chemin
@@ -21,7 +22,7 @@ void transcription(){
   //on initialise la chaine de caractère et on extrait la séquence
 
   char sequence[taille_fasta];
-  extract_sequence(path_input, sequence, taille_fasta);
+  extract_sequence(path_input, sequence);
 
 
   // Booléens de vérification :
