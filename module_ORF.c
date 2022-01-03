@@ -1,26 +1,40 @@
-#include <stdio.h>
-#include <string.h>
-#include <stddef.h>
-#define SIZE_MAX 10000
+#include "utils.h"
+#include "module_ORF.h"
 
-int main() {
 
-    char sequence[SIZE_MAX];
+void orf() {
 
-    printf("Bienvenue dans le module de recherche de cadre ouvert de lecture.\n
-            Veuillez préciser un chemin d'accès vers un fichier au format fasta.\n
-            Y sera recherché le plus grand cadre ouvert de lecture depuis un codon\n
-            ATG vers un des trois codons STOP, dans les 6 cadres possibles offerts\n
-            par la séquence fournie.\n\n");
+    printf("Vous avez sélectionné : Rechercher la séquence codante la plus longue \n");
+
+    printf("Bienvenue dans le module de recherche de cadre ouvert de lecture.\n"
+            "Veuillez préciser un chemin d'accès vers un fichier au format fasta.\n"
+            "Y sera recherché le plus grand cadre ouvert de lecture depuis un codon\n"
+            "ATG vers un des trois codons STOP, dans les 6 cadres possibles offerts\n"
+            "par la séquence fournie.\n\n");
 
 
     // Mettre procédure d'appel de chemin de fichier //
 
+    //L'utilisateur a choisit le module ORF finder
+    printf("Vous avez sélectionné : ORF finder \n");
 
+    //on initialise la chaine de caractère contenant la voie du fichier
+    char path_input[PATH_INPUT_MAX_SIZE];
 
+    printf("quel est le nom du fichier que vous voulez lire \n");
+    scanf("%s", path_input); //nom du fichier test = test_fasta (fichier cours sans la première ligne)
+    //on ne peut mettre que le nom du fichier et non tout le chemin
+    printf("\n");
 
+    //on cherche la taille de la séquence
 
+    int taille_fasta = 0;
+    taille(path_input, &taille_fasta);
+
+    //on initialise la chaine de caractère et on extrait la séquence
     // extract_sequence(path_input,sequence);
+    char sequence[taille_fasta];
+    extract_sequence(path_input, sequence);
 
 
     int i, k;
@@ -152,6 +166,6 @@ int main() {
 
 
     printf("%s\n",sequence);
-    return 0;
+
 
 }
