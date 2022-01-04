@@ -143,43 +143,21 @@ void save_sequence(const char* path_output, char* sequence) {
     }
 }
 
+
+// Obsolète pour le moment
 void get_path_user(char* path_input) {
 
 
-  printf("Entrez ici votre chemin d'accès au fichier FASTA \n");
-  scanf("%c",path_input);
+		printf("Entrez ici votre chemin d'accès au fichier FASTA \n");
+		printf("Si le fichier à lire n'est pas dans le répertoire courant,\n");
+		printf("veuillez utiliser le chemin absolu vers le fichier\n");
 
-  fgets(path_input, PATH_INPUT_MAX_SIZE, stdin);//je comprend pas cette ligne.
+  	scanf("%s",path_input);
 
+  	FILE* fichier = fopen(path_input,"r");
+  	if ( !fichier ) {
 
-  FILE* fichier = fopen(path_input,"r");
-  bool path = false;
-
-  if ( !fichier ) {
-
-  printf("\nLe chemin spécifié ne permet pas l'ouverture du fichier\n");
-  printf("Voulez vous réessayer de spécifier un chemin d'accès ? O/n \n");
-
-  char answer;
-  scanf("%c",&answer);
-
-    while ( !fichier && path == false) {
-
-      if ( answer == 'O' || answer == 'o') {
-
-        printf("Entrez ici votre chemin d'accès au fichier FASTA \n");
-        fgets(path_input, PATH_INPUT_MAX_SIZE, stdin);
-        fichier = fopen(path_input,"r");
-
-      }
-
-      else if ( answer == 'N' || answer == 'n' ) {
-
-        printf("Fermeture du programme\n");
-        path = true;
-
-      }
-
-    }
+  	printf("\nLe chemin spécifié ne permet pas l'ouverture du fichier\n");
+  	printf("Le programme va maintenant se fermer \n");
   }
 }

@@ -57,8 +57,10 @@ void transcription(){
   }
 
   int compteur = 0;
+
   //si les conditions sont remplis on fait la transcription
   // on réalise le changement de base
+	
   if(codant[0]=='T' && taille[0]=='T'){
     for (i=0;i<taille_sequence;i++){
       if (sequence[i]=='T'){
