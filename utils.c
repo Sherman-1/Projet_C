@@ -78,7 +78,9 @@ void extract_sequence(const char* path_input, char* sequence) {
 
       int k;
       for ( k = 0; k < strlen(buffer); k++) {
-        sequence[k] = buffer[k];
+        if (buffer[k] != '\n') {
+          sequence[k] = buffer[k];
+        }
       }
     }
 
