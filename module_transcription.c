@@ -20,10 +20,10 @@ void transcription(){
 
   //on initialise la chaine de caractère et on extrait la séquence
 
-  char sequence[taille_fasta];
-  extract_sequence(path_input, sequence);
+  char sequence_codante[taille_fasta];
+  extract_sequence(path_input, sequence_codante);
 
-  printf("%s\n", sequence);
+  printf("%s\n", sequence_codante);
 
   // Booléens de vérification :
   // pour la taille(%3) + codon START au début
@@ -34,7 +34,7 @@ void transcription(){
   int i=0;
 
   //CHECK du codon start
-  if(sequence[0]=='A' && sequence[1]=='T' && sequence[2]=='G'){
+  if(sequence_codante[0]=='A' && sequence_codante[1]=='T' && sequence_codante[2]=='G'){
     printf("La séquence contient bien un codon START \n");
     codant[0] = 'T'; //Vrais si les trois premieres base correspondent a un ATG
   }
@@ -44,9 +44,9 @@ void transcription(){
 
 
   //CHECK de la taille de la séquence
-  int taille_sequence=strlen(sequence);
+  int taille_sequence=strlen(sequence_codante);
 
-  if((strlen(sequence)-1)%3==0){
+  if((strlen(sequence_codante)-1)%3==0){
     printf("La taille de la séquence est bonne \n");
     taille[0] = 'T'; // Vrais si la taille est divisible par 3
   }
@@ -54,40 +54,43 @@ void transcription(){
     printf("La taille de la séquence n'est pas bonne \n");
   }
 
-  char sequence_transcrite[taille_sequence];
-
   //si les conditions sont remplis on fait la transcription
   // on réalise le changement de base
 
   if(codant[0]=='T' && taille[0]=='T'){
+
+    char sequence_ARN[taille_sequence];
+
     for (i=0;i<taille_sequence;i++){
-      if (sequence[i]=='\0'){
-        i++;
-      }
-      else if (sequence[i]=='T'){
-        sequence_transcrite[i]='A';
+
+      if (sequence_codante[i]=='T'){
+        sequence_ARN[i]='U';
 
       }
-      else if (sequence[i]=='A'){
-        sequence_transcrite[i]='U';
+      else if (sequence_codante[i]=='A'){
+        sequence_ARN[i]='A';
 
       }
-      else if (sequence[i]=='G'){
-        sequence_transcrite[i]='C';
+      else if (sequence_codante[i]=='G'){
+        sequence_ARN[i]='G';
 
+      }
+      else if (sequence_codante[i]=='C'){
+        sequence_ARN[i]='C';
       }
       else{
-        sequence_transcrite[i]='G';
+        sequence_ARN[i]='\0';
       }
     }
 
 
-  printf("%s \n", sequence_transcrite);
+
+  printf("%s \n", sequence_ARN);
 
   char path_output[PATH_INPUT_MAX_SIZE];
   printf("\nVeuillez entrer le nom du fichier dans lequel s'écrira la séquence transcrite\n");
   scanf("%s",path_output);
-  save_sequence(path_output,sequence_transcrite);
+  save_sequence(path_output,sequence_ARN);
   }
    //on obtient dans un nouveaux fichier le brin transcris d'ARN
   else{
