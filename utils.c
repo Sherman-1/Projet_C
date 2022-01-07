@@ -11,7 +11,6 @@ void extract_sequence(const char* path_input, char* sequence) {
       exit ( EXIT_FAILURE ) ;
     }
 
-
     // Tant que le caractère EOF n'est pas atteint, on déplace le curseur fgetc le long du fichier
     // Le contenu du fichier est versé dans buffer[]
     while (! feof(fichier)) {
@@ -67,7 +66,10 @@ void extract_sequence(const char* path_input, char* sequence) {
 
         }
       }
+			printf("Dans le cas ou fasta : \n%s\n",sequence);
     }
+
+
 
     // DANS LE CAS OU NON FORMAT FASTA
 
@@ -76,12 +78,18 @@ void extract_sequence(const char* path_input, char* sequence) {
 
     else {
 
-      int k;
+      int k, n = 0;
       for ( k = 0; k < strlen(buffer); k++) {
         if (buffer[k] != '\n') {
-          sequence[k] = buffer[k];
+
+          sequence[n] = buffer[k];
+					n++;
+					
         }
       }
+
+			printf("Dans le cas ou pas fasta : \n%s\n",sequence);
+
     }
 
     //Pour une raison inconnue, la lecture de fichier implique
@@ -133,6 +141,8 @@ void save_sequence(const char* path_output, char* sequence) {
         fputc(sequence[i],fichier);
         k++;
     }
+
+
 }
 
 
