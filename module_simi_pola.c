@@ -10,10 +10,12 @@ void simi_pola(){
   char path_input_1[100];
   char path_input_2[100];
   printf("Vous avez besoin de deux fichiers \n");
-  printf("Quel est le nom du premier fichier \n");
-  scanf("%s", path_input_1);
-  printf("Quel est le nom du deuxième fichier \n");
-  scanf("%s", path_input_2);
+  printf("Le premier : \n");
+  get_path_user(path_input_1);
+
+  printf("Le deuxième : \n");
+  get_path_user(path_input_2);
+
 
   //on détermine la taille des fichiers donnés
   int taille_sequence_1=0;
@@ -34,8 +36,9 @@ void simi_pola(){
 
   printf("\n");
 
-  if (taille_sequence_1 != taille_sequence_2){
-    printf("Vos séquences n'ont pas la même taille recommencez");
+  if (taille_sequence_1 != taille_sequence_2-1){ // -1 car la deuxième séquence a été faite
+    // à la main et est donc différente de la taille de la séquence 1
+    printf("Vos séquences n'ont pas la même taille recommencez \n");
     //On compare que si la taille des deux séquences est identique
 
   }
@@ -54,7 +57,7 @@ void simi_pola(){
     // si la valeur de caract est différent ==> - sera affiché
 
 
-    for (i=0;i<=taille_sequence_pola-2;i++){
+    for (i=0;i<=taille_sequence_pola-1;i++){
 
       if (sequence1[i] == 'F' ||sequence1[i] == 'A' ||sequence1[i] == 'L' ||sequence1[i] == 'I' ||sequence1[i] == 'M' ||sequence1[i] == 'W' ||sequence1[i] == 'P' ||sequence1[i] == 'G' ||sequence1[i] == 'V'){
         caract_1 = caract_1 +10;
@@ -93,7 +96,7 @@ void simi_pola(){
       caract_1 = 0;
       caract_2 = 0;
     }
-    seq_polarite[taille_sequence_pola-1]='\0';
+    seq_polarite[taille_sequence_pola]='\0';
 
     //Affichage de la séquence de polarité
     printf("0: hydrophiles, 1:hydrophobes, -:différents \n\n");
