@@ -91,16 +91,6 @@ void extract_sequence(const char* path_input, char* sequence) {
 }
 
 
-// Fonction obsolète car les consignes autorisent de définir une SIZE_MAX de 10000
-size_t taille_fasta(const char* path_input) {
-
-    FILE* fichier;
-    fichier = fopen(path_input,"r");
-    fseek(fichier,0L, SEEK_END);
-    size_t a = ftell(fichier);
-    rewind(fichier);
-    return(a);
-}
 
 void taille(const char* path_input, int* taille_fasta) {
 
