@@ -66,7 +66,6 @@ void extract_sequence(const char* path_input, char* sequence) {
 
         }
       }
-			printf("Dans le cas ou fasta : \n%s\n",sequence);
     }
 
 
@@ -84,12 +83,9 @@ void extract_sequence(const char* path_input, char* sequence) {
 
           sequence[n] = buffer[k];
 					n++;
-					
+
         }
       }
-
-			printf("Dans le cas ou pas fasta : \n%s\n",sequence);
-
     }
 
     //Pour une raison inconnue, la lecture de fichier implique
@@ -107,7 +103,7 @@ void taille(const char* path_input, int* taille_fasta) {
     FILE* openfile= fopen(path_input, "r");
 
     while(fgetc(openfile) != EOF)
-      (*taille_fasta) ++;
+      (*taille_fasta)++;
 
     fclose(openfile);
 }
@@ -140,13 +136,10 @@ void save_sequence(const char* path_output, char* sequence) {
 
         fputc(sequence[i],fichier);
         k++;
+
     }
-
-
 }
 
-
-// Obsolète pour le moment
 void get_path_user(char* path_input) {
 
 
@@ -159,7 +152,7 @@ void get_path_user(char* path_input) {
   	FILE* fichier = fopen(path_input,"r");
   	if ( !fichier ) {
 
-  	printf("\nLe chemin spécifié ne permet pas l'ouverture du fichier\n");
-  	printf("Le programme va maintenant se fermer \n");
+  		printf("\nLe chemin spécifié ne permet pas l'ouverture du fichier\n");
+  		printf("Le programme va maintenant se fermer \n");
   }
 }
