@@ -4,7 +4,7 @@
 
 void orf() {
 
-    printf("Vous avez sélectionné : Rechercher la séquence codante la plus longue \n");
+    printf("\nVous avez sélectionné : Rechercher la séquence codante la plus longue \n");
 
     printf("Bienvenue dans le module de recherche de cadre ouvert de lecture.\n"
             "Veuillez préciser un chemin d'accès vers un fichier au format fasta.\n"
@@ -13,23 +13,29 @@ void orf() {
             "par la séquence fournie.\n\n");
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 51dc09b9ca2658dd747cc74c842b88fe447a9bd0
     //on initialise la chaine de caractère contenant la voie du fichier
     char path_input[PATH_INPUT_MAX_SIZE];
 
     printf("quel est le nom du fichier que vous voulez lire \n");
-    scanf("%s", path_input); //nom du fichier test = test_fasta (fichier cours sans la première ligne)
-    //on ne peut mettre que le nom du fichier et non tout le chemin
+    scanf("%s", path_input);
     printf("\n");
-
-    //on initialise la chaine de caractère et on extrait la séquence
 
 
     char sequence[SIZE_MAX];
     extract_sequence(path_input, sequence);
+		printf("Taille sequence input : %ld\n",strlen(sequence));
 
+<<<<<<< HEAD
 
 
     int i, k;
+=======
+    int i, k; // Compteurs
+>>>>>>> 51dc09b9ca2658dd747cc74c842b88fe447a9bd0
     int boolean_stop;
 
 
@@ -45,7 +51,7 @@ void orf() {
 
     } OpenReadingFrame;
 
-    OpenReadingFrame ORF_trouves[100] = {0};
+    OpenReadingFrame ORF_trouves[1000] = {0};
 
 		// Garde en mémoire si l'ORF le plus long est sur le brin sens ou antisens
 		int sens_antisens = -1;
@@ -60,12 +66,12 @@ void orf() {
 
 	// Recherche de l'ORF le plus long dans le brin sens
 
-    for ( i = 0; i < strlen(sequence); i++) { // On cherche de 1 en 1 dans sequence[]
-
+    for ( i = 0; i < strlen(sequence)+30; i++) { // On cherche de 1 en 1 dans sequence[]
         if ( sequence[i] == 'A' && sequence[i+1] == 'T' && sequence[i+2] == 'G' ) { // La présence d'un codon START
 
             ORF_trouves[number_ORF].start = i; // Si START, on indique sa position
-            boolean_stop = 0;
+
+            boolean_stop = 0; // Permet de maintenir la boucle do while
             k = i+3; // k représente ici la position du codon juste après START
 
             do { // Recherche du codon stop dans le cadre de lecture du codon START trouvé
@@ -190,7 +196,8 @@ void orf() {
     // Inversion du transcrit pour chercher l'ORF dans le bon
     // sens de lecture du brin d'ADN
 
-    int m, n = strlen(transcrit);
+    int m;
+		int n = strlen(transcrit);
     char currentChar;
 
     for (m = 0; m<n/2; m++) {
@@ -307,7 +314,9 @@ void orf() {
 				compteur_final++;
 			}
 
-			printf("\nUn ORF a été trouvé sur le brin sens, sa séquence va maintenant etre sauvegardee dans un fichier de sortie");
+			printf("La longueur de l'ORF finale est : %ld\n",strlen(orf_final));
+
+			printf("\nL'ORF le plus long a été trouvé sur le brin sens, sa séquence va maintenant etre sauvegardee dans un fichier de sortie");
 			printf("\nVeuillez entrer le nom du fichier dans lequel s'écrira votre ORF trouvee\n");
 			scanf("%s",path_output);
 			save_sequence(path_output,orf_final);
@@ -320,7 +329,10 @@ void orf() {
 				compteur_final++;
 
 			}
-			printf("\nUn ORF a été trouvé sur le brin antisens, sa séquence va maintenant etre sauvegardee dans un fichier de sortie");
+
+			printf("La longueur de l'ORF finale est : %ld\n",strlen(orf_final));
+
+			printf("\nL'ORF le plus long a été trouvé sur le brin antisens, sa séquence va maintenant etre sauvegardee dans un fichier de sortie");
 			printf("\nVeuillez entrer le nom du fichier dans lequel s'écrira votre ORF trouvee\n");
 			scanf("%s",path_output);
 			save_sequence(path_output,orf_final);

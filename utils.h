@@ -9,4 +9,5 @@
 void taille(const char* path_input, int* taille_fasta);
 void extract_sequence(const char* path_input, char* sequence);
 void get_path_user(char* path_input);
-void save_sequence(const char* path_output, char* sequence) ;
+void save_sequence(const char* path_output, char* sequence);
+size_t taille_fasta(const char* path_input);
