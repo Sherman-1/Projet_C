@@ -17,8 +17,8 @@ void orf() {
     char path_input[PATH_INPUT_MAX_SIZE];
     int taille_sequence = 0;
 
-    printf("quel est le nom du fichier que vous voulez lire \n");
-    scanf("%s", path_input);
+    get_path_user(path_input);
+
     printf("\n");
 
     taille(path_input, &taille_sequence);
