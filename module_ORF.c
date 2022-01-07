@@ -15,13 +15,15 @@ void orf() {
 
     //on initialise la chaine de caractère contenant la voie du fichier
     char path_input[PATH_INPUT_MAX_SIZE];
+    int taille_sequence = 0;
 
     printf("quel est le nom du fichier que vous voulez lire \n");
     scanf("%s", path_input);
     printf("\n");
 
+    taille(path_input, &taille_sequence);
 
-    char sequence[SIZE_MAX];
+    char sequence[taille_sequence];
     extract_sequence(path_input, sequence);
 		printf("Taille sequence input : %ld\n",strlen(sequence));
 
@@ -57,7 +59,7 @@ void orf() {
 
 	// Recherche de l'ORF le plus long dans le brin sens
 
-    for ( i = 0; i < strlen(sequence)+30; i++) { // On cherche de 1 en 1 dans sequence[]
+    for ( i = 0; i < strlen(sequence); i++) { // On cherche de 1 en 1 dans sequence[]
         if ( sequence[i] == 'A' && sequence[i+1] == 'T' && sequence[i+2] == 'G' ) { // La présence d'un codon START
 
             ORF_trouves[number_ORF].start = i; // Si START, on indique sa position
