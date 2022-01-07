@@ -13,19 +13,24 @@ void identite(){
 
   //on lui demande les fichiers qu'il veut comparer
   printf("vous avez besoin de deux fichiers \n");
-  printf("Quel est le nom du premier fichier \n");
-  scanf("%s", path_input_1);
-  printf("Quel est le nom du deuxième fichier \n");
-  scanf("%s", path_input_2);
+  printf("Le premier : \n");
+
+  get_path_user(path_input_1),
+
+  printf("le second : \n");
+
+  get_path_user(path_input_2);
 
   //on cherche la taille des séquences qu'on va comparer et non elles doivent être de la même taille
   int taille_sequence_1=0;
   //on cherche la taille de la sequence 1
   taille(path_input_1, &taille_sequence_1);
+  printf("taille sequence 1 : %d \n", taille_sequence_1);
 
   int taille_sequence_2=0;
   //on cherche la taille de la séquence 2
   taille(path_input_2, &taille_sequence_2);
+  printf("taille sequence 2 : %d \n", taille_sequence_2);
 
   //on initialise les séquences avec la taille précedemment determiné
   char sequence1[taille_sequence_1];
@@ -35,11 +40,16 @@ void identite(){
   extract_sequence(path_input_1, sequence1);
   extract_sequence(path_input_2, sequence2);
 
+  //la deuxieme séquence a été faite a la main ou n'est pas passé par les précedents
+  //modules donc différent de la première séquence
+  sequence1[taille_sequence_1]='\0';
+  sequence2[taille_sequence_2-1]='\0';
+
   //on initialise un booléen pour verifier que les tailles des deux séquences
   //sont égales
   bool taille = false;
 
-  if (taille_sequence_1 != taille_sequence_2){
+  if (taille_sequence_1 != taille_sequence_2-1){
     taille = false;
   }
   else{
@@ -80,8 +90,9 @@ void identite(){
 
   //on rajoute '\0' pour terminer les chaînes de caractère
   //on peut peut être le faire dans le extract sequence directement
-  sequence1[taille_sequence_1]='\0';
-  sequence2[taille_sequence_2]='\0';
+
+
+  sequence_identite[taille_sequence_identite]='\0';
 
   // on sort le pourcentage d'indentité des deux séquences + les deux séquences qu'on compare + la séquence identité
   identite = (compteur_identite/taille_sequence_identite)*100;
