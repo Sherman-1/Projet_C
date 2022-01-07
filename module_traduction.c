@@ -4,418 +4,364 @@
 
 void traduction(){
 
-  //l'utilisateur a choisit le module de traduction
-  printf("Vous avez sélectionné : Traduction \n");
+  printf("Vous avez choisit le module : Traduction \n");
 
-  //on demande a l'utilisateur le nom du fichier qu'il veut lire
   char path_input[100];
-  printf("quel est le nom du fichier que vous voulez lire \n");
-  scanf("%s", path_input);
-  printf("\n");
 
-  //Recherche de la taille de la séquence
-  int taille_fasta = 0;
-  taille(path_input, &taille_fasta);
+  get_path_user(path_input);
 
-  //on extrait la séquence
-  char sequence[taille_fasta];
-  extract_sequence(path_input, sequence);
+  int taille_sequence = 0;
 
-  int i=0;
-  int y=0;
+  taille(path_input,&taille_sequence);
 
-  //booléen : verification qu'on a bien une séquence ARN
+  char sequence[taille_sequence];
+
+  extract_sequence(path_input,sequence);
+
+
   bool Arn = false;
+  int y=0;
   //int taille_sequence = strlen(sequence); //necessaire pour le Whiles
 
-  FILE* op=fopen("séquence_traduite.txt","w");
+  FILE* op=fopen(path_input,"r");
 
-for (y=0;y<taille_fasta;y++){
-  if (sequence[y]=='T'){
-    Arn = false;
+  for (y=0;y<taille_sequence;y++){
+    if (sequence[y]=='T'){
+      Arn = false;
+    }
+    else{
+      Arn = true;
+
+    }
+  }
+
+  fclose(op);
+
+  if(Arn == false){
+    printf("Ce n'est pas une séquence à ARN, recommencez \n");
+    // si la condition est fausse, on arrete le programme et l'utilisateur doit recommencer
   }
   else{
-    Arn = true;
-  }
-}
 
-if(Arn == false){
-  printf("Ce n'est pas une séquence ARN, recommencez");
-  // si la condition est fausse, on arrete le programme et l'utilisateur doit recommencer
-}
-else{
-//si la condition est bonne, on démarre la traduction
+    printf("C'est bien une sequence à ARN \n");
+
+    int i = 0;
+    char sequence_traduite[taille_sequence/3];
     int compteur = 0;
-//on met un compteur pour revenir à la ligne tous les 80 caractères
-  do{
+
+
+    do{
 
     if (sequence[i]=='U'){
       if(sequence[i+1]=='U'){
         if(sequence[i+2]=='U'){
-          char aa[]="F";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='F';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="F";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='F';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="L";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='L';
+
         }
         else{
-          char aa[]="L";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='L';
+
         }
       }
       else if(sequence[i+1]=='C'){
         if(sequence[i+2]=='U'){
-          char aa[]="S";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='S';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="S";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='S';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="S";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='S';
+
         }
         else{
-          char aa[]="S";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='S';
+
         }
       }
       else if(sequence[i+1]=='A'){
         if(sequence[i+2]=='U'){
-          char aa[]="Y";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='Y';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="Y";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='M';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="Stop";
-          fprintf(op, "%s",aa);
-          compteur = compteur +4;
+          sequence_traduite[compteur]='\0';
+
         }
         else{
-          char aa[]="Stop";
-          fprintf(op,"%s",aa);
-          compteur = compteur +4;
+          sequence_traduite[compteur]='\0';
+
         }
       }
       else if(sequence[i+1]=='G'){
         if(sequence[i+2]=='U'){
-          char aa[]="C";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='C';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="C";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='C';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="Stop";
-          fprintf(op, "%s",aa);
-          compteur = compteur +4;
+          sequence_traduite[compteur]='\0';
+
         }
         else{
-          char aa[]="W";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='W';
+
         }
       }
     }
     else if (sequence[i]=='C'){
       if(sequence[i+1]=='U'){
         if(sequence[i+2]=='U'){
-          char aa[]="L";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='L';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="L";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='L';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="L";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='L';
+
         }
         else{
-          char aa[]="L";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='L';
+
         }
       }
       else if(sequence[i+1]=='C'){
         if(sequence[i+2]=='U'){
-          char aa[]="P";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='P';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="P";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='P';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="P";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='P';
+
         }
         else{
-          char aa[]="P";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='P';
+
         }
       }
       else if(sequence[i+1]=='A'){
         if(sequence[i+2]=='U'){
-          char aa[]="H";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='H';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="H";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='H';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="Q";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='Q';
+
         }
         else{
-          char aa[]="Q";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='Q';
+
         }
       }
       else if(sequence[i+1]=='G'){
         if(sequence[i+2]=='U'){
-          char aa[]="R";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='R';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="R";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='R';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="R";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='R';
+
         }
         else{
-          char aa[]="R";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='R';
+
         }
       }
     }
     else if (sequence[i]=='A'){
       if(sequence[i+1]=='U'){
         if(sequence[i+2]=='U'){
-          char aa[]="I";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='I';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="I";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='I';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="I";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='I';
+
         }
         else{
-          char aa[]="M";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='M';
+
         }
       }
       else if(sequence[i+1]=='C'){
         if(sequence[i+2]=='U'){
-          char aa[]="T";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='T';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="T";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='T';
+
         }
-        else if (sequence[i+2]=='A'){
-          char aa[]="T";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          else if (sequence[i+2]=='A'){
+          sequence_traduite[compteur]='T';
+
         }
         else{
-          char aa[]="T";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='T';
+
         }
       }
       else if(sequence[i+1]=='A'){
         if(sequence[i+2]=='U'){
-          char aa[]="N";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='N';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="N";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='N';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="K";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='K';
+
         }
         else{
-          char aa[]="K";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='K';
+
         }
       }
       else if(sequence[i+1]=='G'){
         if(sequence[i+2]=='U'){
-          char aa[]="S";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='S';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="S";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='S';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="R";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='R';
+
         }
         else{
-          char aa[]="R";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='R';
+
         }
       }
     }
     else if(sequence[i]=='G'){
       if(sequence[i+1]=='U'){
         if(sequence[i+2]=='U'){
-          char aa[]="V";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='V';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="V";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='V';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="V";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='V';
+
         }
         else{
-          char aa[]="V";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='V';
+
         }
       }
       else if(sequence[i+1]=='C'){
         if(sequence[i+2]=='U'){
-          char aa[]="A";
-          fprintf(op,"%s",aa);
+          sequence_traduite[compteur]='A';
+
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="A";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='A';
+
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="A";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='A';
+
         }
         else{
-          char aa[]="A";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='A';
+
         }
       }
       else if(sequence[i+1]=='A'){
         if(sequence[i+2]=='U'){
-          char aa[]="D";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='D';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="D";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='D';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="E";
-          fprintf(op, "%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='E';
+
         }
         else{
-          char aa[]="E";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='E';
+
         }
       }
       else if(sequence[i+1]=='G'){
         if(sequence[i+2]=='U'){
-          char aa[]="G";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='G';
+
         }
         else if (sequence[i+2]=='C'){
-          char aa[]="G";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='G';
+
         }
         else if (sequence[i+2]=='A'){
-          char aa[]="G";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='G';
+
         }
         else{
-          char aa[]="G";
-          fprintf(op,"%s",aa);
-          compteur = compteur +1;
+          sequence_traduite[compteur]='G';
+
         }
       }
     }
-    i = i+3;
-    if (compteur == 80){
-      fprintf(op,"\n");
-      compteur = 0;
-    }
+  i = i +3 ;
+  compteur ++;
   }
-  while(i<taille_fasta);
-}
-  fclose(op);
+    while(i<taille_sequence);
 
+    printf("%s \n", sequence_traduite);
+
+    char path_output[100];
+
+    printf("Quel est le nom du fichier en sortie \n");
+    scanf("%s",path_output);
+
+    save_sequence(path_output,sequence_traduite);
+  }
 }
