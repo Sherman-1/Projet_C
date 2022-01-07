@@ -22,14 +22,14 @@ void extract_sequence(const char* path_input, char* sequence) {
 
     fclose(fichier);
 
-    /*
-    ______________________________________
+
+  /*  ______________________________________
 
     Seconde partie du code, on traite le buffer
     en fonction de la nature du fichier d'origine.
-    ______________________________________
+    ______________________________________*/
 
-    */
+
 
     // DANS LE CAS OU FORMAT FASTA
 
@@ -82,9 +82,9 @@ void extract_sequence(const char* path_input, char* sequence) {
       }
     }
 
-    /* Pour une raison inconnue, la lecture de fichier implique
-    que la chaine buffer[] se termine toujours par un caractère
-    spécial, on le supprime donc en le remplaçant par \0 */
+    //Pour une raison inconnue, la lecture de fichier implique
+    //que la chaine buffer[] se termine toujours par un caractère
+    //spécial, on le supprime donc en le remplaçant par \0
 
     sequence[strlen(sequence)-1] = '\0';
 

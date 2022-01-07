@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#define SIZE_MAX 10000
+#define SIZE_MAX 100000
 #define PATH_INPUT_MAX_SIZE 100
 
 

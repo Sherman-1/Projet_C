@@ -13,11 +13,6 @@ void orf() {
             "par la séquence fournie.\n\n");
 
 
-    // Mettre procédure d'appel de chemin de fichier //
-
-    //L'utilisateur a choisit le module ORF finder
-    printf("Vous avez sélectionné : ORF finder \n");
-
     //on initialise la chaine de caractère contenant la voie du fichier
     char path_input[PATH_INPUT_MAX_SIZE];
 
@@ -31,6 +26,8 @@ void orf() {
 
     char sequence[SIZE_MAX];
     extract_sequence(path_input, sequence);
+
+
 
     int i, k;
     int boolean_stop;
