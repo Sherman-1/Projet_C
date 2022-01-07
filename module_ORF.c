@@ -13,10 +13,6 @@ void orf() {
             "par la séquence fournie.\n\n");
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 51dc09b9ca2658dd747cc74c842b88fe447a9bd0
     //on initialise la chaine de caractère contenant la voie du fichier
     char path_input[PATH_INPUT_MAX_SIZE];
 
@@ -29,13 +25,8 @@ void orf() {
     extract_sequence(path_input, sequence);
 		printf("Taille sequence input : %ld\n",strlen(sequence));
 
-<<<<<<< HEAD
-
-
-    int i, k;
-=======
     int i, k; // Compteurs
->>>>>>> 51dc09b9ca2658dd747cc74c842b88fe447a9bd0
+
     int boolean_stop;
 
 
@@ -161,58 +152,58 @@ void orf() {
 		}
 
 
-    // Bloc de code où on transcrit puis inverse la séquence pour 6 cadres lecture au total
+    // Bloc de code où on complémente puis inverse la séquence pour 6 cadres lecture au total
 
-    // Transcription
+    // Brin complément
 
-    char transcrit[SIZE_MAX];
-    int transcrit_compteur = 0;
+    char complement[SIZE_MAX];
+    int complement_compteur = 0;
     for ( i = 0; i < strlen(sequence); i++) {
 
         if ( sequence[i] == 'A') {
-            transcrit[transcrit_compteur] = 'T';
-                        transcrit_compteur++;
+            complement[complement_compteur] = 'T';
+                        complement_compteur++;
         }
 
                 else if ( sequence[i] == 'T') {
 
-            transcrit[transcrit_compteur] = 'A';
-                        transcrit_compteur++;
+            complement[complement_compteur] = 'A';
+                        complement_compteur++;
         }
 
         else if ( sequence[i] == 'G') {
 
-            transcrit[transcrit_compteur] = 'C';
-                        transcrit_compteur++;
+            complement[complement_compteur] = 'C';
+                        complement_compteur++;
         }
 
         else if ( sequence[i] == 'C') {
-            transcrit[transcrit_compteur] = 'G';
-                        transcrit_compteur++;
+            complement[complement_compteur] = 'G';
+                        complement_compteur++;
         }
     }
 
 
-    // Inversion du transcrit pour chercher l'ORF dans le bon
-    // sens de lecture du brin d'ADN
+    // Inversion du complément pour chercher l'ORF dans le bon
+    // sens de lecture du brin d'ADN complémentaire
 
     int m;
-		int n = strlen(transcrit);
+		int n = strlen(complement);
     char currentChar;
 
     for (m = 0; m<n/2; m++) {
 
-        currentChar = transcrit[m];
-        transcrit[m] = transcrit[n-m-1]; // -1 Car on ne veut pas bouger le \O
-        transcrit[n-m-1] = currentChar;
+        currentChar = complement[m];
+        complement[m] = complement[n-m-1]; // -1 Car on ne veut pas bouger le \O
+        complement[n-m-1] = currentChar;
 
     }
 
-	// Recherche de l'ORF la plus longue dans le reverse complement ( transcrit[] )
+	// Recherche de l'ORF la plus longue dans le reverse complement ( complement[] )
 
-    for ( i = 0; i < strlen(transcrit); i++) {
+    for ( i = 0; i < strlen(complement); i++) {
 
-        if ( transcrit[i] == 'A' && transcrit[i+1] == 'T' && transcrit[i+2] == 'G' ) {
+        if ( complement[i] == 'A' && complement[i+1] == 'T' && complement[i+2] == 'G' ) {
 
             ORF_trouves[number_ORF].start = i;
             boolean_stop = 0;
@@ -220,9 +211,9 @@ void orf() {
 
             do { // Recherche du codon stop dans le cadre de lecture du codon START trouvé
 
-                if ( transcrit[k+2]) {
+                if ( complement[k+2]) {
 
-                    if ( transcrit[k] == 'T' && transcrit[k+1] == 'G' && transcrit[k+2] == 'A') {
+                    if ( complement[k] == 'T' && complement[k+1] == 'G' && complement[k+2] == 'A') {
 
                         ORF_trouves[number_ORF].stop = k;
                         ORF_trouves[number_ORF].length = (ORF_trouves[number_ORF].stop) - ORF_trouves[number_ORF].start+3;
@@ -240,7 +231,7 @@ void orf() {
 
                     }
 
-                    else if ( transcrit[k] == 'T' && transcrit[k+1] == 'A' && transcrit[k+2] == 'G') {
+                    else if ( complement[k] == 'T' && complement[k+1] == 'A' && complement[k+2] == 'G') {
 
                         ORF_trouves[number_ORF].stop = k;
                         ORF_trouves[number_ORF].length = (ORF_trouves[number_ORF].stop) - ORF_trouves[number_ORF].start+3;
@@ -260,7 +251,7 @@ void orf() {
 
                     }
 
-                    else if ( transcrit[k] == 'T' && transcrit[k+1] == 'A' && transcrit[k+2] == 'A') {
+                    else if ( complement[k] == 'T' && complement[k+1] == 'A' && complement[k+2] == 'A') {
 
                         ORF_trouves[number_ORF].stop = k;
                         ORF_trouves[number_ORF].length = (ORF_trouves[number_ORF].stop) - ORF_trouves[number_ORF].start+3;
@@ -287,7 +278,7 @@ void orf() {
                     break;
                 }
 
-            } while ( boolean_stop == 0 ); // Tant qu'un codon n'a pas été trouvé, on parcourt transcrit[]
+            } while ( boolean_stop == 0 ); // Tant qu'un codon n'a pas été trouvé, on parcourt complement[]
 
         }
     }
@@ -322,10 +313,10 @@ void orf() {
 			save_sequence(path_output,orf_final);
 		}
 
-		else if ( sens_antisens == 1 ) { // Si l'ORF est sur le brin antisens on cherche dans transcrit[]
+		else if ( sens_antisens == 1 ) { // Si l'ORF est sur le brin antisens on cherche dans complement[]
 			for ( i = ORF_trouves[longest_ORF].start; i < ORF_trouves[longest_ORF].stop+3; i++) {
 
-				orf_final[compteur_final] = transcrit[i];
+				orf_final[compteur_final] = complement[i];
 				compteur_final++;
 
 			}
