@@ -306,7 +306,7 @@ void orf() {
 				orf_final[compteur_final] = sequence[i];
 				compteur_final++;
 			}
-
+      
 			printf("La longueur de l'ORF finale est : %ld\n",strlen(orf_final));
 
 			printf("\nL'ORF le plus long a été trouvé sur le brin sens, sa séquence va maintenant etre sauvegardee dans un fichier de sortie");
