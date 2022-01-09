@@ -1,10 +1,10 @@
 #include "utils.h"
 #include "module_transcription.h"
 
-/* Le module de transcription sert a transformé les thymines en uraciles.
+/* Le module de transcription sert a transformer les thymines en uraciles.
 L'utilisateur fournit un fichier contenant une séquence codante c'est à dire
 avec un ATG en début de séquence et un codont STOP à la fin. De plus la séquence
-doit avoir un format bien définis c'est a dire que ça taille doit être un multiple
+doit avoir un format bien défini c'est a dire que sa taille doit être un multiple
 de 3 (necessaire pour la traduction). En sortie, on enregistre la séquence transrite
 dans un nouveau fichier */
 
@@ -61,7 +61,7 @@ void transcription(){
     printf("La taille de la séquence n'est pas bonne \n");
   }
 
-  //si les conditions sont remplis on fait la transcription
+  //si les conditions sont remplies on fait la transcription
   // on réalise le changement de base
 
   if(codant[0]=='T' && taille[0]=='T'){
@@ -94,7 +94,7 @@ void transcription(){
 
   printf("%s \n", sequence_ARN);
 
-  //on demande la nom du fichier de sauvegarde
+  //on demande le nom du fichier de sauvegarde
   char path_output[PATH_INPUT_MAX_SIZE];
   printf("\nVeuillez entrer le nom du fichier dans lequel s'écrira la séquence transcrite\n");
   scanf("%s",path_output);

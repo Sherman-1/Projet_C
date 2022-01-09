@@ -1,11 +1,11 @@
 #include "utils.h"
 
 
-/* La fonction extract_sequence a pour but de copier les données d'un fihcier
-et de les mettres en une chaine de caractère. Ici on fait en sorte de
-selectionner uniquement les données du fichier qui nous interresse. En entré,
-nous avons le nom du fichier a lire ainsi qu'une séquence initialisé a la taille
-du fichier. En sortie, on récupère une séquence remplit de donné. */
+/* La fonction extract_sequence a pour but de copier les données d'un fichier
+et de les mettres dans une chaine de caractère. Ici on fait en sorte de
+selectionner uniquement les données du fichier qui nous interressent. En entrée,
+nous avons le nom du fichier à lire ainsi qu'une séquence initialisée à la taille
+du fichier. En sortie, on récupère une séquence de lettres sans retour chariot. */
 
 
 void extract_sequence(const char* path_input, char* sequence) {
@@ -15,12 +15,13 @@ void extract_sequence(const char* path_input, char* sequence) {
 
     FILE* fichier = fopen(path_input,"r");
     if (! fichier ) {
-      printf ( " L'ouverture a échouée\n Veuillez spécifier un chemin d'accès valide pour le fichier\n" ) ;
+      printf ( " L'ouverture a échoué\n Veuillez spécifier un chemin d'accès valide pour le fichier\n" ) ;
       exit ( EXIT_FAILURE ) ;
     }
 
     // Tant que le caractère EOF n'est pas atteint, on déplace le curseur fgetc le long du fichier
     // Le contenu du fichier est versé dans buffer[]
+
     while (! feof(fichier)) {
         int currentChar = fgetc(fichier);
         buffer[i] = currentChar;
@@ -67,7 +68,7 @@ void extract_sequence(const char* path_input, char* sequence) {
 
       for ( k = i ; k < strlen(buffer); k++) {
 
-        if (buffer[k] != '\n') {
+        if (buffer[k] != '\n') { // On ne conserve pas les retours chartiot
 
           sequence[n] = buffer[k];
           n++;
@@ -80,14 +81,17 @@ void extract_sequence(const char* path_input, char* sequence) {
 
     // DANS LE CAS OU NON FORMAT FASTA
 
-    // Si le fichier n'est pas au format fasta ( module 6 )
-    // On transfère buffer[] dans sequence[] sans modification
+    // Si le fichier n'est pas au format fasta
+    // On transfère buffer[] dans sequence[] sans
+		// sauter la première ligne
 
     else {
 
-      int k, n = 0;
+      int k, n = 0; // Variables de comptage
+
       for ( k = 0; k < strlen(buffer); k++) {
-        if (buffer[k] != '\n') {
+
+        if (buffer[k] != '\n') { // On ne conserve pas les retours chartiot
 
           sequence[n] = buffer[k];
 					n++;
@@ -106,11 +110,11 @@ void extract_sequence(const char* path_input, char* sequence) {
 
 
 /* La fonction taille nous permet de determiner la taille du fichier que
-l'utilisateur a choisit. Cela nous permet d'initiliser des chaines de caractère
-en connaissant la vrais taille des fichiers et non une taille approximative.
+l'utilisateur a choisi. Cela nous permet d'initiliser des chaines de caractère
+en connaissant la vraie taille des fichiers et non une taille approximative.
 Cette fonction est importante car elle est présente dans tous les modules.
-En entrée, nous avons le nom fichier qui sera lu et une variable taille valant 0.
-En sortie, nous avons la variable taille égale au nombre de caractère du fichier*/
+En entrée, nous avons le nom fichier qui sera lu et une variable taille.
+La variable taille est modifiée hors de la procédure par un passage par pointeur*/
 
 void taille(const char* path_input, int* taille_fasta) {
 
@@ -123,7 +127,7 @@ void taille(const char* path_input, int* taille_fasta) {
 }
 
 /* La fonction save_sequence permet a l'utilisateur de sauvegarder dans un
-nouveau fichier les éléments d'une chaine d'une chaine de caratère*/
+nouveau fichier les éléments d'une chaine de caratère*/
 
 void save_sequence(const char* path_output, char* sequence) {
 
@@ -142,13 +146,14 @@ void save_sequence(const char* path_output, char* sequence) {
     // Bloc de code où on inscrit dans le fichier la séquence entrée dans la
     // procédure. Retour à la ligne dès que 80 caractères sont ajoutés.
 
-    int k = 0;
-         // k sert de compteur réinitialisable pour le nombre de caractère ajouté.
+    int k = 0;  // k sert de compteur réinitialisable pour le nombre de caractère ajouté.
+
+
     for ( i = 0; i < strlen(sequence); i++) {
         if (k == 80) {
 
             fputc('\n',fichier);
-            k = 0;
+            k = 0;  // k est réinitialisé à 0 après un retour à la ligne
         }
 
         fputc(sequence[i],fichier);

@@ -59,12 +59,12 @@ void traduction(){
 
     printf("C'est bien une sequence à ARN \n");
 
-    /* La traduction est réalisé en prenant la base à la position i ainsi que
+    /* La traduction est réalisée en prenant la base à la position i ainsi que
     que les bases a la position i+1 et i+2 de cette façon on obtient un codon
-    et on avance de trois en trois jusqu'à dépassé la taille du fichier.
+    et on avance de trois en trois jusqu'à dépasser la taille du fichier.
     Les codons sont ensuite un à un mis sous toutes les combinaisons possibe
     d'acide aminé jusqu'à trouver la bonne combinaison qui est ensuite
-    enregistrée dans un séquence temporaire qui sera utilisé pour lors de la
+    enregistrée dans une séquence temporaire qui sera utilisée lors de la
     sauvegarde dans un fichier*/
 
     int i = 0;

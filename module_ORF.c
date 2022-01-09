@@ -52,9 +52,12 @@ void orf() {
 
     } OpenReadingFrame;
 
+		// On déclare un tableau de cette structure pour conserver les positions de tous les ORF trouvés
+
     OpenReadingFrame ORF_trouves[1000] = {0};
 
 		// Garde en mémoire si l'ORF le plus long est sur le brin sens ou antisens
+		// A la fin du code, 0 voudra dire brin sens, 1 brin antisens 
 		int sens_antisens = -1;
 
 		// Compteur permettant de parcourir ORF_trouves[]
@@ -77,7 +80,7 @@ void orf() {
 
             do { // Recherche du codon stop dans le cadre de lecture du codon START trouvé
 
-                if ( sequence[k+2]) { // Si la séquence continue jusqu'à l'indice k+2, on évite les lectures hors bornes
+                if ( sequence[k+2]) { // Si la séquence continue jusqu'à l'indice k+2 on continue de chercher, on évite les lectures hors bornes
 
                     if ( sequence[k] == 'T' && sequence[k+1] == 'G' && sequence[k+2] == 'A') { // Si un des codons STOP est trouvé
 

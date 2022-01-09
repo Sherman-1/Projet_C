@@ -12,20 +12,20 @@ void identite(){
 
   //L'utilisateur a choisit le module identité
 
-  printf("Vous avez séletionné : Cacule du score d'identité entre deux séquence \n");
+  printf("Vous avez séletionné : Cacul du score d'identité entre deux séquences \n");
 
-  //on initialise les chaines de caractère contenant les voies des fichiers à lire
+  //on initialise les chaines de caractères contenant les voies des fichiers à lire
   char path_input_1[PATH_INPUT_MAX_SIZE];
   char path_input_2[PATH_INPUT_MAX_SIZE];
 
   //on lui demande les fichiers qu'il veut comparer
-  printf("vous avez besoin de deux fichiers \n");
+  printf("Vous avez besoin de deux fichiers \n");
   printf("Le premier : \n");
 
   //on fait un première appel pour connaitre le nom du premier fichier
   get_path_user(path_input_1),
 
-  printf("le second : \n");
+  printf("Le second : \n");
 
   //on fait un deuxième appel pour connaitre le nom du deuxième fichier
   get_path_user(path_input_2);
@@ -104,7 +104,7 @@ void identite(){
       }
       else{
 
-        //si les acides aminés sont différenes, il y aura un "-" à la position i
+        //si les acides aminés sont différents, il y aura un "-" à la position i
         sequence_identite[i] = '-';
       }
       i++;
@@ -133,8 +133,8 @@ void identite(){
   }
   else{
 
-    /*si les deux tailles dont différentes, on revoit un message d'erreur et
-     l'utilisateur doit relancez le logiciel*/
+    /*si les deux tailles dont différentes, on renvoit un message d'erreur et
+     l'utilisateur doit relancer le logiciel*/
 
     printf("Les tailles de vos séquences sont différentes, recommencez \n");
 
