@@ -1,6 +1,11 @@
 #include "utils.h"
 #include "module_simi_pola.h"
 
+/* Le module simi pola a pour but de caculer le score de similarité de polarité
+entre deux séquences protéiques. Pour cela, l'utilisateur founit deux fichiers
+de même taille comteant des acides aminés. Le module compare les séquences entre
+elle et définit une séquence polarité.*/
+
 void simi_pola(){
 
   //l'utilsateur a choisit le module simi pola
@@ -9,11 +14,16 @@ void simi_pola(){
   //on demande le chemin des fichiers qu'il veut comparer
   char path_input_1[100];
   char path_input_2[100];
+
   printf("Vous avez besoin de deux fichiers \n");
   printf("Le premier : \n");
+
+  //un premier appel pour le premier fichier
   get_path_user(path_input_1);
 
   printf("Le deuxième : \n");
+
+  //un deuxième appel pour le deuxième fichier
   get_path_user(path_input_2);
 
 
@@ -36,13 +46,22 @@ void simi_pola(){
 
   printf("\n");
 
-  if (taille_sequence_1 != taille_sequence_2-1){ // -1 car la deuxième séquence a été faite
-    // à la main et est donc différente de la taille de la séquence 1
+
+  /* On compare la taille des deux fichiers, si ces derniers étaient différents
+  la comparaison ne serait pas réalisée*/
+
+
+  if (taille_sequence_1 != taille_sequence_2-1){
+     /* -1 car la deuxième séquence a été faite
+    / à la main et est donc différente de la taille de la séquence 1*/
+
     printf("Vos séquences n'ont pas la même taille recommencez \n");
-    //On compare que si la taille des deux séquences est identique
+    printf("taille sequence 1 : %d \n", taille_sequence_1);
+    printf("taille sequence 2 : %d \n", taille_sequence_2);
 
   }
   else{
+
     //si la taille des deux séquences est identique on demarre la comparaison
     int taille_sequence_pola = taille_sequence_1;
     int i=0;
@@ -51,10 +70,11 @@ void simi_pola(){
 
     char seq_polarite[taille_sequence_pola];
 
-    //on fonction des AA comparés, le caract va prendre une valeur en fonction des deux séquence
-    // si la valeur de caract est identique pour les deux séquences ==> 1 sera affiché si c'est des AA hydrophobes
-    //                           ==> 0 sera affiché si c'est des AA hydrophiles
-    // si la valeur de caract est différent ==> - sera affiché
+    /* En fonction des AA comparés, le caract va prendre une valeur en fonction des deux séquences
+        si la valeur de caract est identique pour les deux séquences
+          ==> 1 sera affiché si c'est des AA hydrophobes
+          ==> 0 sera affiché si c'est des AA hydrophiles
+        si la valeur de caract est différent ==> - sera affiché */
 
 
     for (i=0;i<=taille_sequence_pola-1;i++){

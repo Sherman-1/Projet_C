@@ -1,5 +1,13 @@
 #include "utils.h"
 
+
+/* La fonction extract_sequence a pour but de copier les données d'un fihcier
+et de les mettres en une chaine de caractère. Ici on fait en sorte de
+selectionner uniquement les données du fichier qui nous interresse. En entré,
+nous avons le nom du fichier a lire ainsi qu'une séquence initialisé a la taille
+du fichier. En sortie, on récupère une séquence remplit de donné. */
+
+
 void extract_sequence(const char* path_input, char* sequence) {
 
     char buffer[SIZE_MAX]; // Variable tampon pour accueillir le fichier brut temporairement
@@ -97,6 +105,12 @@ void extract_sequence(const char* path_input, char* sequence) {
 }
 
 
+/* La fonction taille nous permet de determiner la taille du fichier que
+l'utilisateur a choisit. Cela nous permet d'initiliser des chaines de caractère
+en connaissant la vrais taille des fichiers et non une taille approximative.
+Cette fonction est importante car elle est présente dans tous les modules.
+En entrée, nous avons le nom fichier qui sera lu et une variable taille valant 0.
+En sortie, nous avons la variable taille égale au nombre de caractère du fichier*/
 
 void taille(const char* path_input, int* taille_fasta) {
 
@@ -107,6 +121,9 @@ void taille(const char* path_input, int* taille_fasta) {
 
     fclose(openfile);
 }
+
+/* La fonction save_sequence permet a l'utilisateur de sauvegarder dans un
+nouveau fichier les éléments d'une chaine d'une chaine de caratère*/
 
 void save_sequence(const char* path_output, char* sequence) {
 
@@ -139,6 +156,10 @@ void save_sequence(const char* path_output, char* sequence) {
 
     }
 }
+
+/* La fonction get_path_user permet a l'utilisateur de stocker le nom du fichier
+qu'il veut lire dans un module et de verifier que ce fichier est réellement
+accessible */
 
 void get_path_user(char* path_input) {
 

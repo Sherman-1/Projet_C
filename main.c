@@ -5,6 +5,10 @@
 #include "module_simi_pola.h"
 #include "module_ORF.h"
 
+/* Le main ici sert d'interface d'intéraction primaire avec l'utilisateur. Dès
+qu'il lance le programme on lui affiche tout ce qu'il peut faire et il est ensuite
+redirigé vers les focntions associées en fonction de ses choix. */
+
 int main(){
 
   int reponse = 0;

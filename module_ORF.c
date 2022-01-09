@@ -2,6 +2,11 @@
 #include "module_ORF.h"
 
 
+/* Le module ORF a pour objectif de trouver la séquence codante la plus longue
+dans un fichier fasta que l'urilsateur aura choisi. En sortie, sera afficher
+la taille de la séquence codante, sa position dans le fichier, ainsi le brin sur
+lequel elle a été trouvé*/
+
 void orf() {
 
     printf("\nVous avez sélectionné : Rechercher la séquence codante la plus longue \n");
@@ -13,7 +18,7 @@ void orf() {
             "par la séquence fournie.\n\n");
 
 
-    //on initialise la chaine de caractère contenant la voie du fichier
+    //on demande en entré le nom du fichier de l'utilisateur
     char path_input[PATH_INPUT_MAX_SIZE];
     int taille_sequence = 0;
 
@@ -21,17 +26,20 @@ void orf() {
 
     printf("\n");
 
+    //on détermine la taille du fichier fournis
     taille(path_input, &taille_sequence);
 
     char sequence[taille_sequence];
+
+    //on extrait les données du fichier dans une séquence
     extract_sequence(path_input, sequence);
 		printf("Taille sequence input : %ld\n",strlen(sequence));
 
+
+
+
     int i, k; // Compteurs
-
     int boolean_stop;
-
-
 
 		// On stocke dans cette structure les informations
 		// de chaque ORF trouvé
@@ -306,7 +314,7 @@ void orf() {
 				orf_final[compteur_final] = sequence[i];
 				compteur_final++;
 			}
-      
+
 			printf("La longueur de l'ORF finale est : %ld\n",strlen(orf_final));
 
 			printf("\nL'ORF le plus long a été trouvé sur le brin sens, sa séquence va maintenant etre sauvegardee dans un fichier de sortie");
